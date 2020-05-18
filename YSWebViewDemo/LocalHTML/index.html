@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html>
+    <head lang="zh-cmn-Hans">
+        <meta charset="UTF-8">
+            <title>YSWebViewTest</title>
+            <meta name="renderer" content="webkit">
+            <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+            <meta name="viewport" content="width=device-width,initial-scale=0.5,user-scalable=no"/>
+            <!--require dsbridge init js-->
+<!--            <script src="https://cdn.jsdelivr.net/npm/dsbridge/dist/dsbridge.js">-->
+            <script src="./dsbridge.js">
+            </script>
+    </head>
+    
+    <style>
+        body{
+            background-color:white;
+        }
+        .btn {
+            text-align: center;
+            background: #eee;
+            color: #000;
+            padding: 20px;
+            margin: 30px;
+            font-size: 24px;
+            border-radius: 4px;
+            box-shadow: 4px 2px 10px #999;
+        }
+        .ipt {
+            text-align: center;
+            background: green;
+            color: #000;
+            padding: 20px;
+            margin: 30px;
+            font-size: 24px;
+            border-radius: 4px;
+            box-shadow: 4px 2px 10px #999;
+        }
+    
+    
+        .btn:active {
+            opacity: .7;
+            box-shadow: 4px 2px 10px #555;
+        }
+    </style>
+    
+    <script>
+        function test(message){
+            dsBridge.call("test",message);
+        }
+        function web_showStatusBar(show){
+            dsBridge.call("web_showStatusBar",show);
+        }
+        function changeStatusBarStyle(style){
+            dsBridge.call("web_changeStatusBarStyle",style);
+        }
+        function openSystemSetting(){
+            dsBridge.call("web_openSystemSetting");
+        }
+        function saveKeyValue(kv){
+            dsBridge.call("web_saveKeyValue",kv);
+        }
+        function getValueForKey(key){
+            var value = dsBridge.call("web_getValueForKey",key);
+            alert('获取到key: ' + key +' 对应的value: '+value);
+        }
+        function openNewWindow(url){
+            dsBridge.call("web_openNewWindow",url);
+        }
+    
+        function openNewWindow(url){
+            dsBridge.call("web_openNewWindow",url);
+        }
+        function pickImage(){
+            dsBridge.call("web_pickImage",function(base64String){
+              alert('获取到图片 \r\n' + base64String);
+            });
+        }
+    
+        function copyText(){
+            var text = 'web_copyText  复制内容'
+            dsBridge.call("web_copyText",text,function(){
+              alert('复制成功');
+            });
+        }
+    
+        function pay(type){
+            
+            var zfbURL = 'alipay://alipayclient/?%7B%0A%20%20%22fromAppUrlScheme%22%20%3A%20%22gamemall%22%2C%0A%20%20%22requestType%22%20%3A%20%22SafePay%22%2C%0A%20%20%22dataString%22%20%3A%20%22partner%3D%5C%222088911582127880%5C%22%26seller_id%3D%5C%22%28null%29%5C%22%26out_trade_no%3D%5C%22%28null%29%5C%22%26subject%3D%5C%22%28null%29%5C%22%26body%3D%5C%22alipay_sdk%3Dalipay-sdk-java-dynamicVersionNo%26app_id%3D2016110802636275%26biz_content%3D%257B%2522body%2522%253A%2522100%25E5%2596%25B5%25E7%2582%25B9%2522%252C%2522out_trade_no%2522%253A%25221547923938273805%2522%252C%2522product_code%2522%253A%2522QUICK_MSECURITY_PAY%2522%252C%2522subject%2522%253A%2522100%25E5%2596%25B5%25E7%2582%25B9%2522%252C%2522timeout_express%2522%253A%252230m%2522%252C%2522total_amount%2522%253A%252210.00%2522%257D%26charset%3Dutf-8%26format%3Djson%26method%3Dalipay.trade.app.pay%26notify_url%3Dhttps%253A%252F%252Ftrade.youximao.com%252F%252Fnotify%252FalipayRsa2Mobile%26sign%3Dhv1cUlsyS2gmTNZJOz3VA1Z59hFWSsHJ824nHdTBeo6e1E%252FL9T5zdooipQdveqhbVoicQJuGsukKlIUzLSsTVCebAoSvVZC04zgRBbMNutsLd3jiC4nY63gwuM9P7A7x1%252B2lCTLuWOYc8mK7fDkpTbnjPm6WRTBVo4ior2Prpng%253D%26sign_type%3DRSA%26timestamp%3D2019-06-18%2B11%253A09%253A52%26version%3D1.0%5C%22%26total_fee%3D%5C%22%28null%29%5C%22%26notify_url%3D%5C%22%28null%29%5C%22%26service%3D%5C%22%28null%29%5C%22%26payment_type%3D%5C%22%28null%29%5C%22%26_input_charset%3D%5C%22utf-8%5C%22%26it_b_pay%3D%5C%22%28null%29%5C%22%26sign%3D%5C%22%28null%29%5C%22%26sign_type%3D%5C%22RSA%5C%22%22%0A%7D';
+            var wxURL = 'weixin://app/wx896661328515ce2f/pay/?nonceStr=pzulyjl0rgbsghed6j1imlbtfexm73l0&package=Sign%3DWXPay&partnerId=1332517601&prepayId=wx1811570795009694d9a0685a1994859300&timeStamp=1560830227&sign=D25792B7B81A64630F0FC6ABC778237D';
+            
+            var url;
+            if(type == 0){
+                url = wxURL;
+            }else{
+                url = zfbURL;
+            }
+            
+            
+            window.location.href = url;
+        }
+    
+        
+    
+        /*
+        dsBridge.register('app_rotation', function (direction) {
+          var text = '横屏';
+          if(direction == 1){
+            text = '竖屏';
+          }
+          console.log('当前为屏幕方向' + text);
+          return 3;
+        })
+         */
+    
+    
+        dsBridge.registerAsyn('app_rotation', function (direction,responseCallback) {
+          var t = 0;
+          var timer = setInterval(function () {
+              if (t == 5) {
+                  responseCallback(t);
+                  clearInterval(timer);
+              } else {
+                  // if the 2nd argument is false,  the java callback handler will be not removed!
+                  responseCallback(t++, false);
+              }
+          }, 1000);
+        })
+        
+        dsBridge.register('app_showKeyboard', function (show) {
+          var text = '收起键盘';
+          if(show){
+            text = '唤起键盘';
+          }
+        })
+        
+        dsBridge.register('app_pasteboadContent', function (message) {
+          alert(message);
+        })
+               
+       
+    </script>
+   
+    
+    <body>
+        <div class="btn" onclick="test('hello world!')">测试 hello world</div>
+        <div class="btn" onclick="web_showStatusBar(true)">显示状态栏</div>
+        <div class="btn" onclick="web_showStatusBar(false)">隐藏状态栏</div>
+        <div class="btn" onclick="changeStatusBarStyle(0)">状态栏样式改变(dark)</div>
+        <div class="btn" onclick="changeStatusBarStyle(1)">状态栏样式改变(light)</div>
+        <div class="btn" onclick="openSystemSetting()">打开系统设置界面</div>
+        <div class="btn" onclick="saveKeyValue({'anyKey':'anyValue'})">保存任意{key:value}</br>{"anyKey":"anyValue"}</div>
+        <div class="btn" onclick="getValueForKey('anyKey')">获取value for key</div>
+        <div class="btn" onclick="openNewWindow('newPage')">打开新窗口(nextPage.html)</div>
+        <div class="btn" onclick="openNewWindow('https://www.baidu.com?option=11010001011')">打开新窗口(https://www.baidu.com)</div>
+        <div class="btn" onclick="pickImage()">打开相册选择图片</div>
+        <div class="btn" onclick="copyText()">复制字符串</div>
+        <div class="btn" onclick="pay(0)">微信支付</div>
+        <div class="btn" onclick="pay(1)">支付宝支付</div>
+    </body>
+    
+    
+</html>

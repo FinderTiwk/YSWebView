@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="AHF-F2-qrj">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment version="4352" identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--YSWebView-->
+        <scene sceneID="tne-QT-ifu">
+            <objects>
+                <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eya-HS-K2G">
+                                <rect key="frame" x="139" y="74" width="136" height="34"/>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="18"/>
+                                <state key="normal" title="LocalHTML Test"/>
+                                <connections>
+                                    <action selector="loadLocalHTMLAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5t2-NI-4Nc"/>
+                                </connections>
+                            </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CAy-dC-lV9" userLabel="URL输入区域">
+                                <rect key="frame" x="20" y="128" width="374" height="45"/>
+                                <subviews>
+                                    <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="https://www.baidu.com" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hj3-H5-viD">
+                                        <rect key="frame" x="0.0" y="0.0" width="304" height="45"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="69l-WD-oaR">
+                                        <rect key="frame" x="314" y="2.6666666666666572" width="60" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="LRD-y5-uMU"/>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="aGc-9N-QJ0"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                                        <state key="normal" title="GO"/>
+                                        <connections>
+                                            <action selector="loadURLAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DzM-X4-qaE"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstItem="69l-WD-oaR" firstAttribute="leading" secondItem="Hj3-H5-viD" secondAttribute="trailing" constant="10" id="3FR-ZL-fmE"/>
+                                    <constraint firstAttribute="bottom" secondItem="Hj3-H5-viD" secondAttribute="bottom" id="Heu-ww-Xd0"/>
+                                    <constraint firstItem="Hj3-H5-viD" firstAttribute="leading" secondItem="CAy-dC-lV9" secondAttribute="leading" id="SsG-UT-dN3"/>
+                                    <constraint firstAttribute="trailing" secondItem="69l-WD-oaR" secondAttribute="trailing" id="U4X-Jl-oS1"/>
+                                    <constraint firstItem="Hj3-H5-viD" firstAttribute="top" secondItem="CAy-dC-lV9" secondAttribute="top" id="Umc-uX-xrL"/>
+                                    <constraint firstItem="69l-WD-oaR" firstAttribute="centerY" secondItem="CAy-dC-lV9" secondAttribute="centerY" id="h3t-n7-vQC"/>
+                                    <constraint firstAttribute="height" constant="45" id="kgx-Iw-xBI"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3fZ-Z1-iz4" userLabel="Option字符可视化区域">
+                                <rect key="frame" x="20" y="193" width="374" height="17"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OptionString:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3W5-V4-rAB">
+                                        <rect key="frame" x="0.0" y="0.0" width="88.666666666666671" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="0" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="3ez-45-Var">
+                                        <rect key="frame" x="93.666666666666657" y="0.0" width="280.33333333333337" height="17"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="textColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="3W5-V4-rAB" firstAttribute="leading" secondItem="3fZ-Z1-iz4" secondAttribute="leading" id="5f7-Ru-jCe"/>
+                                    <constraint firstItem="3ez-45-Var" firstAttribute="bottom" secondItem="3W5-V4-rAB" secondAttribute="bottom" id="CJ4-nc-YEZ"/>
+                                    <constraint firstItem="3W5-V4-rAB" firstAttribute="top" secondItem="3fZ-Z1-iz4" secondAttribute="top" id="EyX-j0-Ovd"/>
+                                    <constraint firstAttribute="bottom" secondItem="3W5-V4-rAB" secondAttribute="bottom" id="FH9-nZ-71b"/>
+                                    <constraint firstItem="3ez-45-Var" firstAttribute="leading" secondItem="3W5-V4-rAB" secondAttribute="trailing" constant="5" id="Gw6-73-U9q"/>
+                                    <constraint firstAttribute="trailing" secondItem="3ez-45-Var" secondAttribute="trailing" id="O55-aa-DWs"/>
+                                    <constraint firstItem="3ez-45-Var" firstAttribute="top" secondItem="3W5-V4-rAB" secondAttribute="top" id="gDv-Bb-HqP"/>
+                                </constraints>
+                            </view>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="m58-M0-uGO">
+                                <rect key="frame" x="0.0" y="230" width="414" height="506"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="dlv-gw-Apr">
+                                        <rect key="frame" x="20" y="0.0" width="374" height="580"/>
+                                        <subviews>
+                                            <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7dk-xy-1zy">
+                                                <rect key="frame" x="0.0" y="0.0" width="374" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="显示工具条" image="unchecked">
+                                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="checked">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="optionChangedAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="JZl-EJ-6JG"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o30-s4-rC2">
+                                                <rect key="frame" x="0.0" y="40" width="374" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="是否透明背景" image="unchecked">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="checked">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="optionChangedAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HIU-Xl-5iw"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wx1-cl-is3">
+                                                <rect key="frame" x="0.0" y="80" width="374" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="是否锁定应用屏幕方向" image="unchecked">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="checked">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="optionChangedAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ruE-qX-QeK"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="4" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dt2-IV-vBX">
+                                                <rect key="frame" x="0.0" y="120" width="374" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="是否竖屏" image="unchecked">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="checked">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="optionChangedAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ly7-hb-hsv"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="5" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RTz-EJ-sg1">
+                                                <rect key="frame" x="0.0" y="160" width="374" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="是否隐藏导航栏" image="unchecked">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="checked">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="optionChangedAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tpl-ez-dGn"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="6" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kko-AD-0F1">
+                                                <rect key="frame" x="0.0" y="200" width="374" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="是否穿透导航栏" image="unchecked">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="checked">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="optionChangedAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="auI-Y1-Rzn"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="7" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c8F-X6-iJZ">
+                                                <rect key="frame" x="0.0" y="240" width="374" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="导航栏样式" image="unchecked">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="checked">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="optionChangedAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="nGJ-PZ-9dn"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="8" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dzf-07-Tbb">
+                                                <rect key="frame" x="0.0" y="280" width="374" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="是否显示标题" image="unchecked">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="checked">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="optionChangedAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="QRD-va-9qp"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="9" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BXH-Bp-aqF">
+                                                <rect key="frame" x="0.0" y="320" width="374" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="是否显示进度条" image="unchecked">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="checked">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="optionChangedAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Qiw-se-4IU"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="10" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="W5L-wl-vGP">
+                                                <rect key="frame" x="0.0" y="360" width="374" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="是否开实体启返回按钮事件响应(Android专用)" image="unchecked">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="checked">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="optionChangedAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Z3F-ki-M9w"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="11" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Uf9-cY-5as">
+                                                <rect key="frame" x="0.0" y="400" width="374" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="加载失败时是否自动关闭容器" image="unchecked">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="checked">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="optionChangedAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="yPP-SV-PCI"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="12" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bMS-Sl-Ku5">
+                                                <rect key="frame" x="0.0" y="440" width="374" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="打开新窗方式" image="unchecked">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="checked">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="optionChangedAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TqW-2h-awY"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="13" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ej2-DX-tiw">
+                                                <rect key="frame" x="0.0" y="480" width="374" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="打开新窗口是否禁止动画" image="unchecked">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="checked">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="optionChangedAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="F3A-BZ-fXJ"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="14" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kAP-PX-jRV">
+                                                <rect key="frame" x="0.0" y="520" width="374" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="是否隐藏状态栏" image="unchecked">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="checked">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="optionChangedAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IYL-KE-lro"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" tag="15" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="o01-3Q-D78">
+                                                <rect key="frame" x="0.0" y="560" width="374" height="20"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                <inset key="titleEdgeInsets" minX="5" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                                <state key="normal" title="状态栏样式" image="unchecked">
+                                                    <color key="titleColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <state key="selected" image="checked">
+                                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="optionChangedAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ExH-zI-did"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="dlv-gw-Apr" firstAttribute="leading" secondItem="1wU-fm-fqy" secondAttribute="leading" constant="20" id="QK1-LJ-mVM"/>
+                                    <constraint firstItem="dlv-gw-Apr" firstAttribute="bottom" secondItem="1wU-fm-fqy" secondAttribute="bottom" constant="-30" id="Rfc-kz-wrs"/>
+                                    <constraint firstItem="dlv-gw-Apr" firstAttribute="top" secondItem="1wU-fm-fqy" secondAttribute="top" id="fjV-QN-yQt"/>
+                                    <constraint firstItem="dlv-gw-Apr" firstAttribute="trailing" secondItem="1wU-fm-fqy" secondAttribute="trailing" constant="20" id="lXi-aH-8Tn"/>
+                                    <constraint firstItem="dlv-gw-Apr" firstAttribute="width" secondItem="Mpw-pa-LCz" secondAttribute="width" constant="-40" id="zrD-qe-mHR"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="1wU-fm-fqy"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="Mpw-pa-LCz"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" red="0.23018704354763031" green="0.77713233232498169" blue="0.3158949613571167" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="eya-HS-K2G" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="5FM-HR-ZvL"/>
+                            <constraint firstItem="m58-M0-uGO" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="GEb-WD-HNZ"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="CAy-dC-lV9" secondAttribute="trailing" constant="20" id="QHj-Sr-6ac"/>
+                            <constraint firstItem="m58-M0-uGO" firstAttribute="top" secondItem="3fZ-Z1-iz4" secondAttribute="bottom" constant="20" id="SaA-AP-72o"/>
+                            <constraint firstItem="CAy-dC-lV9" firstAttribute="top" secondItem="eya-HS-K2G" secondAttribute="bottom" constant="20" id="blE-9C-7bV"/>
+                            <constraint firstItem="CAy-dC-lV9" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dyr-uA-CtT"/>
+                            <constraint firstItem="CAy-dC-lV9" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="eNl-xo-5iW"/>
+                            <constraint firstItem="3fZ-Z1-iz4" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="m2s-pn-GCM"/>
+                            <constraint firstItem="eya-HS-K2G" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="30" id="nI6-tI-Dfg"/>
+                            <constraint firstAttribute="trailing" secondItem="3fZ-Z1-iz4" secondAttribute="trailing" constant="20" id="tq8-Vg-NgU"/>
+                            <constraint firstItem="m58-M0-uGO" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="w8n-UD-Tbm"/>
+                            <constraint firstItem="m58-M0-uGO" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="wmt-52-gh0"/>
+                            <constraint firstItem="3fZ-Z1-iz4" firstAttribute="top" secondItem="CAy-dC-lV9" secondAttribute="bottom" constant="20" id="yrF-SS-EbJ"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="YSWebView" id="yD6-O8-ZVu"/>
+                    <connections>
+                        <outlet property="optionStringTextView" destination="3ez-45-Var" id="qTs-Ze-m2U"/>
+                        <outlet property="urlTextField" destination="Hj3-H5-viD" id="MvF-xC-UBm"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1047.8260869565217" y="121.875"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="sux-Fc-m6j">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="AHF-F2-qrj" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" barStyle="black" id="sZo-lb-o3B">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" red="0.23018704349999999" green="0.77713233230000001" blue="0.31589496140000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <fontDescription key="fontDescription" type="system" weight="medium" pointSize="18"/>
+                            <color key="textColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textShadowColor" systemColor="systemPurpleColor" red="0.68627450980000004" green="0.32156862749999998" blue="0.87058823529999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" systemColor="systemYellowColor" red="1" green="0.80000000000000004" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <color key="textShadowColor" systemColor="systemRedColor" red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Jhl-oT-oEy"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QKH-cO-AiG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="137.68115942028987" y="121.875"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="checked" width="20" height="20"/>
+        <image name="unchecked" width="20" height="20"/>
+    </resources>
+</document>

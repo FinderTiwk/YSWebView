@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head lang="zh-cmn-Hans">
+        <meta charset="UTF-8">
+            <title>NewPage</title>
+            <meta name="renderer" content="webkit">
+                <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+                    <meta name="viewport" content="width=device-width,initial-scale=0.5,user-scalable=no"/>
+                    <!--require dsbridge init js-->
+                    <script src="https://cdn.jsdelivr.net/npm/dsbridge/dist/dsbridge.js">
+                        </script>
+                    </head>
+    
+    <style>
+        body{
+            background-color:rgb(49,130,217);
+        }
+        .btn {
+            text-align: center;
+            background: #eee;
+            color: #000;
+            padding: 20px;
+            margin: 30px;
+            font-size: 24px;
+            border-radius: 4px;
+            box-shadow: 4px 2px 10px #999;
+        }
+    
+        .btn:active {
+            opacity: .7;
+            box-shadow: 4px 2px 10px #555;
+        }
+    </style>
+    
+    <script>
+        function closeWindow(){
+            dsBridge.call("web_closeWindow");
+        }
+        function saveImage(){
+            alert('保存成功');
+            dsBridge.call("web_saveImage");
+        }
+    
+    
+    </script>
+    
+    
+    <body>
+        <center>这是一个新的界面</center>
+        <div class="btn" onclick="closeWindow()">关闭</div>
+        <center>
+            <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1560416621689&di=412d94f772b451ee3a15c617ea9ca1eb&imgtype=0&src=http%3A%2F%2Fimg3.duitang.com%2Fuploads%2Fitem%2F201512%2F30%2F20151230234109_SNiFV.thumb.700_0.jpeg" onclick='saveImage()'/>
+        </center>
+    </body>
+    
+    
+</html>
