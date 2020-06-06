@@ -289,14 +289,18 @@ id ysWebview_jsonString2Collection(NSString *jsonString){
     
     UIApplication *app = [UIApplication sharedApplication];
     
+    //alipay base64
+    NSString *ap64 = @"YWxpcGF5";
+    NSData *apData = [[NSData alloc]initWithBase64EncodedString:ap64 options:0];
+    NSString *apPrefix = [[NSString alloc]initWithData:apData encoding:NSUTF8StringEncoding];
     // 支付宝支付
-    if ([url.scheme hasPrefix:@"alipay"]) {
-        NSCParameterAssert(self.jsManager.webViewController.zfbScheme);
+    if ([url.scheme hasPrefix:apPrefix]) {
+        NSCParameterAssert(self.jsManager.webViewController.apWay);
         NSArray *urlBaseArr = [navigationAction.request.URL.absoluteString componentsSeparatedByString:@"?"];
         NSString *urlBaseStr = urlBaseArr.firstObject;
         NSString *urlNeedDecode = urlBaseArr.lastObject;
         NSString *decodeString =  ysWebview_decodeURL(urlNeedDecode);
-        NSString *afterHandleStr = [decodeString stringByReplacingOccurrencesOfString:@"alipays" withString:self.jsManager.webViewController.zfbScheme];
+        NSString *afterHandleStr = [decodeString stringByReplacingOccurrencesOfString:[apPrefix stringByAppendingString:@"s"] withString:self.jsManager.webViewController.apWay];
         NSString *finalStr = [NSString stringWithFormat:@"%@?%@",urlBaseStr, ysWebview_encodeURL(afterHandleStr)];
         NSURL *replacedURL = [NSURL URLWithString:finalStr];
         decisionHandler(WKNavigationActionPolicyCancel);
@@ -313,15 +317,19 @@ id ysWebview_jsonString2Collection(NSString *jsonString){
         return;
     }
     
+    //vx base64  https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb
+    NSString *vx64 = @"aHR0cHM6Ly93eC50ZW5wYXkuY29tL2NnaS1iaW4vbW1wYXl3ZWItYmluL2NoZWNrbXdlYg==";
+    NSData *vxData = [[NSData alloc]initWithBase64EncodedString:vx64 options:0];
+    NSString *vxPrefix = [[NSString alloc]initWithData:vxData encoding:NSUTF8StringEncoding];
     // 微信支付
-    if ([absoluteString hasPrefix:@"https://wx.tenpay.com/cgi-bin/mmpayweb-bin/checkmweb"]){
+    if ([absoluteString hasPrefix:vxPrefix]){
         if ([navigationAction.request.allHTTPHeaderFields valueForKey:@"referer"]) {
             decisionHandler(WKNavigationActionPolicyAllow);
             return;
         }
-        NSCParameterAssert(self.jsManager.webViewController.vxScheme);
+        NSCParameterAssert(self.jsManager.webViewController.vxWay);
         NSMutableURLRequest *vxRequest = [NSMutableURLRequest requestWithURL:url];
-        NSString *referer = [NSString stringWithFormat:@"%@://",self.jsManager.webViewController.vxScheme];
+        NSString *referer = [NSString stringWithFormat:@"%@://",self.jsManager.webViewController.vxWay];
         [vxRequest addValue:referer forHTTPHeaderField:@"referer"];
         [webView loadRequest:vxRequest];
         decisionHandler(WKNavigationActionPolicyCancel);

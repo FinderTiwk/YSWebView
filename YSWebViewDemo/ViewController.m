@@ -29,6 +29,18 @@
     
     _optionStringTextView.textContainerInset = UIEdgeInsetsZero;
     
+    UIBarButtonItem *backItem = [[UIBarButtonItem alloc] init];
+    backItem.title = @"";
+    self.navigationItem.backBarButtonItem = backItem;
+    
+    UINavigationBar *navigationBar = self.navigationController.navigationBar;
+    navigationBar.barTintColor = [UIColor systemGreenColor];
+    navigationBar.tintColor = [UIColor blackColor];
+    [navigationBar setTitleTextAttributes:@{
+        NSForegroundColorAttributeName : [UIColor whiteColor],
+        NSFontAttributeName:[UIFont fontWithName:@"PingFangSC-Medium" size:18]
+    }];
+    
 }
 
 
@@ -36,17 +48,17 @@
     
     YSWebViewController *webViewController = [YSWebViewController new];
     webViewController.urlString = urlString;
-    webViewController.htmlPath = htmlPath;
+    webViewController.htmlFilePath = htmlPath;
     webViewController.option = self.option;
     
     NSDictionary *infoDict = [NSBundle mainBundle].infoDictionary;
     NSArray *urlTypes = infoDict[@"CFBundleURLTypes"];
     for (NSDictionary *dict in urlTypes) {
         if ([dict[@"CFBundleURLName"] isEqualToString:@"zfb"]) {
-            webViewController.zfbScheme = [dict[@"CFBundleURLSchemes"] firstObject];
+            webViewController.apWay = [dict[@"CFBundleURLSchemes"] firstObject];
         }
         if ([dict[@"CFBundleURLName"] isEqualToString:@"vx"]) {
-            webViewController.vxScheme = [dict[@"CFBundleURLSchemes"] firstObject];
+            webViewController.vxWay = [dict[@"CFBundleURLSchemes"] firstObject];
         }
     }
     
@@ -98,7 +110,7 @@
             option.throughNavigationBar = flag;
             break;
         case 7:
-            option.transparentNavigationBar = flag;
+            option.lightNavigationBar = flag;
             break;
         case 8:
             option.autoDetectTitle = flag;

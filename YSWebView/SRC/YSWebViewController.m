@@ -9,9 +9,13 @@
 #import "YSWebViewController.h"
 #import "YSWebViewKit.h"
 
+#import "YSWebViewAppearance.h"
+
 #import "YSWebViewToolBar.h"
 #import "YSWebViewPlaceHolder.h"
 #import "YSWebViewFakeNavigationBar.h"
+#import "YSWebViewNavigationBarRestorer.h"
+
 
 // Web登录成功通知
 NSNotificationName const YSWebLoginSuccessNotification = @"YSWebLoginSuccessNotification";
@@ -25,19 +29,14 @@ NSNotificationName const YSWebWillDoIAPNotification = @"YSWebWillDoIAPNotificati
 
 @interface YSWebViewController ()<UIGestureRecognizerDelegate>
 
-@property (nonatomic,assign) BOOL realNavigationBarHidden;
-
-@property (nonatomic,assign) BOOL addTitleKVO;
-@property (nonatomic,assign) BOOL addProgressKVO;
-@property (nonatomic,assign) BOOL addToolbarKVO;
-
 @property (nonatomic,strong) YSWebViewKit *webKit;
-@property (nonatomic,strong) UIProgressView *progressView;
-
 @property (nonatomic,weak) WKWebView *webView;
-@property (nonatomic,weak) YSWebViewToolBar *toolbar;
-@property (nonatomic,weak) YSWebViewPlaceHolder *placeHolderView;
-@property (nonatomic,weak) YSWebViewFakeNavigationBar *fakeNavigationBar;
+
+@property (nonatomic,strong) UIProgressView *progressView;
+@property (nonatomic,strong) YSWebViewToolBar *toolbar;
+@property (nonatomic,strong) YSWebViewPlaceHolder *placeHolderView;
+@property (nonatomic,strong) YSWebViewFakeNavigationBar *fakeNavigationBar;
+@property (nonatomic,strong) YSWebViewNavigationBarRestorer *restorer;
 
 @end
 
@@ -62,21 +61,16 @@ NSNotificationName const YSWebWillDoIAPNotification = @"YSWebWillDoIAPNotificati
 - (void)viewDidLoad{
     [super viewDidLoad];
 
-    NSAssert(_urlString || _htmlPath, @"YSWebViewController urlString is nil");
-    
-    _realNavigationBarHidden = self.navigationController.navigationBar.hidden;
-    if ([self.navigationController respondsToSelector:@selector(interactivePopGestureRecognizer)]) {
-        self.navigationController.interactivePopGestureRecognizer.delegate = (id<UIGestureRecognizerDelegate>)self;
-        self.navigationController.interactivePopGestureRecognizer.enabled = YES;
-    }
-    
+    NSAssert(_urlString || _htmlFilePath, @"YSWebViewController urlString is nil");
+    [self registNotifications];
+
     if (!self.option.hiddenNavigationBar || self.option.showToolBar) {
         self.view.backgroundColor = [UIColor whiteColor];
     }else{
         self.view.backgroundColor = self.option.clearBackground ? [UIColor clearColor] : [UIColor whiteColor];
     }
     
-    [self registNotifications];
+    
     self.webKit = [YSWebViewKit webKitFor:self];
     self.webView = self.webKit.webView;
     self.webView.hidden = YES;
@@ -116,10 +110,10 @@ NSNotificationName const YSWebWillDoIAPNotification = @"YSWebWillDoIAPNotificati
         [self.webView loadRequest:request];
     }
     else{
-        NSString * htmlContent = [NSString stringWithContentsOfFile:_htmlPath
+        NSString * htmlContent = [NSString stringWithContentsOfFile:_htmlFilePath
                                                            encoding:NSUTF8StringEncoding
                                                               error:nil];
-        NSString *basePath = [_htmlPath stringByDeletingLastPathComponent];
+        NSString *basePath = [_htmlFilePath stringByDeletingLastPathComponent];
         NSURL *baseURL = [NSURL fileURLWithPath:basePath];
         [_webView loadHTMLString:htmlContent
                          baseURL:baseURL];
@@ -171,59 +165,90 @@ NSNotificationName const YSWebWillDoIAPNotification = @"YSWebWillDoIAPNotificati
         vcRightAnchor = self.view.rightAnchor;
     }
     
-    NSLayoutYAxisAnchor *webViewTopAnchor = self.view.topAnchor;
-    if (!self.option.hiddenNavigationBar) {
-        // add navigationBar
-        YSWebViewFakeNavigationBar *navigationBar = [[YSWebViewFakeNavigationBar alloc] init];
-        navigationBar.hidden = YES;
-        navigationBar.backButton.hidden = (self.navigationController.viewControllers.count == 1);
-        [navigationBar.backButton addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
-        if (self.option.throughNavigationBar) {
-            navigationBar.backgroundColor = [UIColor clearColor];
+    NSLayoutYAxisAnchor *webViewTopAnchor = vcTopAnchor;
+    
+    YSWebViewAppearance *appearance = [YSWebViewAppearance appearance];
+    
+    // 不显示导航栏
+    if (_option.hiddenNavigationBar) {
+        if (self.navigationController) {
+            [self.navigationController setNavigationBarHidden:YES animated:YES];
+        }
+        webViewTopAnchor = self.view.topAnchor;
+    }
+    // 显示导航栏
+    else{
+
+        if (!self.title && _option.autoDetectTitle) {
+            [_webView addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:NULL];
         }
         
-        [self.view addSubview:navigationBar];
-        
-        [NSLayoutConstraint activateConstraints:@[
-            [navigationBar.leadingAnchor constraintEqualToAnchor:vcLeftAnchor],
-            [navigationBar.trailingAnchor constraintEqualToAnchor:vcRightAnchor],
-            [navigationBar.topAnchor constraintEqualToAnchor:self.view.topAnchor],
-        ]];
-        
-        if (self.title) {
-            navigationBar.titleLabel.text = self.title;
-        }else{
-            if (self.option.autoDetectTitle) {
-                self.addTitleKVO = YES;
-                [self.webView addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:NULL];
+        // 如果是由导航控制器推过来的, 使用应用的导航栏
+        if (self.navigationController) {
+            
+            if (!self.title && _option.autoDetectTitle) {
+                [_webView addObserver:self forKeyPath:@"title" options:NSKeyValueObservingOptionNew context:NULL];
+            }
+            self.restorer = [YSWebViewNavigationBarRestorer restorerWith:self.navigationController.navigationBar];
+            if (_option.throughNavigationBar) {
+                webViewTopAnchor = self.view.topAnchor;
+            }else{
+                webViewTopAnchor = vcTopAnchor;
             }
         }
         
-        navigationBar.style = self.option.transparentNavigationBar ? YSWebViewFakeNavigationBarStyleWhite : YSWebViewFakeNavigationBarStyleDark;
+        // 如果是由present过来的, 使用模拟导航栏
+        else{
+            _fakeNavigationBar = [[YSWebViewFakeNavigationBar alloc] init];
+            
+            [_fakeNavigationBar.backButton addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
+            if (_option.throughNavigationBar) {
+                _fakeNavigationBar.backgroundColor = [UIColor clearColor];
+            }
+
+            [self.view addSubview:_fakeNavigationBar];
+
+            [NSLayoutConstraint activateConstraints:@[
+                [_fakeNavigationBar.leadingAnchor constraintEqualToAnchor:vcLeftAnchor],
+                [_fakeNavigationBar.trailingAnchor constraintEqualToAnchor:vcRightAnchor],
+                [_fakeNavigationBar.topAnchor constraintEqualToAnchor:self.view.topAnchor],
+            ]];
+            
+            if (_option.throughNavigationBar) {
+                webViewTopAnchor = self.view.topAnchor;
+                _fakeNavigationBar.backgroundColor = [UIColor clearColor];
+            }else{
+                webViewTopAnchor = _fakeNavigationBar.bottomAnchor;
+                _fakeNavigationBar.backgroundColor = appearance.navigationBarBackgroundColor;
+            }
+
+            if (self.title) {
+                _fakeNavigationBar.titleLabel.text = self.title;
+            }
         
-        self.fakeNavigationBar = navigationBar;
-        if (!self.option.throughNavigationBar) {
-            webViewTopAnchor = navigationBar.bottomAnchor;
+            self.fakeNavigationBar.style = self.option.lightNavigationBar ? YSWebViewFakeNavigationBarStyleLight : YSWebViewFakeNavigationBarStyleDark;
         }
+        
     }
     
     
     if (self.option.showProgressBar) {
+        
+        [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:NULL];
+        
         // add navigationBar
-        self.addProgressKVO = YES;
         _progressView = [[UIProgressView alloc] init];
         _progressView.translatesAutoresizingMaskIntoConstraints = NO;
         _progressView.progress = 0;
         _progressView.trackTintColor = [UIColor clearColor];
+        _progressView.progressTintColor = appearance.progressBarColor;
         [self.view addSubview:_progressView];
-        _progressView.progressTintColor = [UIColor colorWithRed:253/255.0 green:183/255.0 blue:28/255.0 alpha:1/1.0];
-        [self.webView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:NULL];
         
         [NSLayoutConstraint activateConstraints:@[
             [_progressView.leadingAnchor constraintEqualToAnchor:vcLeftAnchor],
             [_progressView.trailingAnchor constraintEqualToAnchor:vcRightAnchor],
             [_progressView.heightAnchor constraintEqualToConstant:2],
-            [_progressView.bottomAnchor constraintEqualToAnchor:webViewTopAnchor],
+            [_progressView.topAnchor constraintEqualToAnchor:webViewTopAnchor],
         ]];
     }
     
@@ -245,7 +270,6 @@ NSNotificationName const YSWebWillDoIAPNotification = @"YSWebWillDoIAPNotificati
     if (self.option.showToolBar) {
         // add toolBar
         
-        self.addToolbarKVO = YES;
         [self.webView addObserver:self forKeyPath:@"loading" options:NSKeyValueObservingOptionNew context:nil];
         
         YSWebViewToolBar *toolbar = [[YSWebViewToolBar alloc] init];
@@ -259,10 +283,7 @@ NSNotificationName const YSWebWillDoIAPNotification = @"YSWebWillDoIAPNotificati
         [self.webView addObserver:self forKeyPath:@"canGoForward" options:NSKeyValueObservingOptionNew context:nil];
         [toolbar.forwardButton addTarget:self action:@selector(forwardAction:) forControlEvents:UIControlEventTouchUpInside];
         
-        [self.webView addObserver:self forKeyPath:@"canGoForward" options:NSKeyValueObservingOptionNew context:nil];
         [toolbar.refreshButton addTarget:self action:@selector(refreshAction:) forControlEvents:UIControlEventTouchUpInside];
-        
-        
         [toolbar.closeButton addTarget:self action:@selector(closeAction:) forControlEvents:UIControlEventTouchUpInside];
         
         [self.view addSubview:toolbar];
@@ -275,7 +296,6 @@ NSNotificationName const YSWebWillDoIAPNotification = @"YSWebWillDoIAPNotificati
         ]];
         webViewBottomAnchor = toolbar.topAnchor;
     }
-    
     
     // add webView
     [self.view insertSubview:self.webView atIndex:0];
@@ -295,37 +315,88 @@ NSNotificationName const YSWebWillDoIAPNotification = @"YSWebWillDoIAPNotificati
     } completion:NULL];
 }
 
-
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     
-    if (self.navigationController) {
-        [self.navigationController setNavigationBarHidden:YES animated:YES];
+    if (_option.hiddenNavigationBar || !self.navigationController.navigationBar) return;
+    
+    UINavigationBar *navigationBar = self.navigationController.navigationBar;
+    if (_option.throughNavigationBar) {
+        navigationBar.translucent = YES;
+        UIImage *image = [YSWebViewAppearance appearance].navigationBarBackgroundClearImage;
+        [navigationBar setBackgroundImage:image forBarMetrics:UIBarMetricsDefault];
+        [navigationBar setShadowImage:image];
+        
+    }else{
+        navigationBar.translucent = NO;
+    }
+    
+    
+    if (_option.lightNavigationBar) {
+        navigationBar.tintColor = [UIColor whiteColor];
+        [navigationBar setTitleTextAttributes:@{
+            NSForegroundColorAttributeName : [UIColor whiteColor],
+        }];
+    }else{
+        navigationBar.tintColor = [UIColor blackColor];
+        [navigationBar setTitleTextAttributes:@{
+            NSForegroundColorAttributeName : [UIColor blackColor]
+        }];
+    }
+    
+}
+
+- (void)viewWillDisappear:(BOOL)animated{
+    [super viewWillDisappear:animated];
+    
+    if (_option.hiddenNavigationBar ||
+        !self.navigationController.navigationBar ||
+        !self.restorer) return;
+    
+    [self.restorer affectOn:self.navigationController.navigationBar];
+}
+
+
+//// 支持旋转
+- (BOOL)shouldAutorotate {
+    // 不锁定屏幕, 根据手持方向
+    if (!self.option.lockRotation) {
+        return YES;
+    }
+    return NO;
+}
+
+// 支持的方向
+- (UIInterfaceOrientationMask)supportedInterfaceOrientations {
+    if (!self.option.lockRotation) {
+        return UIInterfaceOrientationMaskAll;
+    }
+    
+    if (self.option.landscape) {
+        return UIInterfaceOrientationMaskLandscape;
+    }else{
+        return UIInterfaceOrientationMaskPortrait;
     }
 }
 
 
-
-//- (BOOL)shouldAutorotate{
-////    return !self.option.lockRotation;
-//    return YES;
-//}
-//
-//- (UIInterfaceOrientationMask)supportedInterfaceOrientations{
-//    if (self.option.landscape) {
-//        return UIInterfaceOrientationMaskLandscape;
-//    }
-//    return UIInterfaceOrientationMaskAll;
-//}
-//
-//- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation{
-//    if (self.option.landscape) {
-//        return UIInterfaceOrientationLandscapeLeft|UIInterfaceOrientationLandscapeRight;
-//    }
-//    return UIInterfaceOrientationPortrait|UIInterfaceOrientationLandscapeLeft|UIInterfaceOrientationLandscapeRight;
-//}
-//
-
+// 一开始的方向
+- (UIInterfaceOrientation)preferredInterfaceOrientationForPresentation {
+    if (!self.option.lockRotation) {
+        UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
+        if (UIDeviceOrientationIsPortrait(orientation)) {
+            return UIInterfaceOrientationPortrait;
+        }else{
+            return UIInterfaceOrientationLandscapeRight;
+        }
+    }
+    
+    if (self.option.landscape) {
+        return UIInterfaceOrientationLandscapeRight;
+    }else{
+        return UIInterfaceOrientationPortrait;
+    }
+}
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -358,24 +429,29 @@ NSNotificationName const YSWebWillDoIAPNotification = @"YSWebWillDoIAPNotificati
 
 
 - (void)dealloc{
+    
 
-    if (self.addTitleKVO) {
+    if (!self.title && self.option.autoDetectTitle) {
         [self.webView removeObserver:self forKeyPath:@"title"];
     }
-    if (self.addProgressKVO) {
+    if (self.progressView) {
         [self.webView removeObserver:self forKeyPath:@"estimatedProgress"];
     }
     
-    if (self.addToolbarKVO) {
+    if (self.toolbar) {
         [self.webView removeObserver:self forKeyPath:@"loading"];
         [self.webView removeObserver:self forKeyPath:@"canGoBack"];
         [self.webView removeObserver:self forKeyPath:@"canGoForward"];
     }
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillShowNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIKeyboardWillHideNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    [notificationCenter removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+    [notificationCenter removeObserver:self name:UIKeyboardWillHideNotification object:nil];
+    [notificationCenter removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
+
+
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -389,12 +465,13 @@ NSNotificationName const YSWebWillDoIAPNotification = @"YSWebWillDoIAPNotificati
         [self dismissViewControllerAnimated:!self.option.reduceAnimation completion:^{
             !self.closeCallback?:self.closeCallback(error);
         }];
+        return;
     }
     
     
     if (self.navigationController.viewControllers.count == 1) {
         if (self.owner) {
-            !_closeCallback?:_closeCallback(error);
+            !_closeCallback ? :_closeCallback(error);
             self.owner.hidden = YES;
             self.owner = nil;
         }else{
@@ -402,18 +479,12 @@ NSNotificationName const YSWebWillDoIAPNotification = @"YSWebWillDoIAPNotificati
                 !self.closeCallback?:self.closeCallback(error);
             }];
         }
+        return;
     }
     
     else{
-        [self.navigationController setNavigationBarHidden:self.realNavigationBarHidden animated:YES];
-        !self.closeCallback?:self.closeCallback(error);
+        !_closeCallback ? :_closeCallback(error);
         [self.navigationController popViewControllerAnimated:YES];
-        
-//        [CATransaction begin];
-//        [CATransaction setCompletionBlock:^{
-//            !self.closeCallback?:self.closeCallback(error);
-//        }];
-//        [CATransaction commit];
     }
     
 }
@@ -488,7 +559,11 @@ NSNotificationName const YSWebWillDoIAPNotification = @"YSWebWillDoIAPNotificati
     
     // 网页title
     if ([keyPath isEqualToString:@"title"]){
-        self.fakeNavigationBar.titleLabel.text = self.webView.title;
+        if (self.fakeNavigationBar) {
+            self.fakeNavigationBar.titleLabel.text = self.webView.title;
+        }else{
+            self.title = self.webView.title;
+        }
     }
     
     // 进度

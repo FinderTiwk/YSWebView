@@ -48,7 +48,7 @@
     XCTAssertFalse(option.lockRotation,@"设置是否禁止旋转选项错误");
     XCTAssertFalse(option.landscape,@"设置是否横屏选项错误");
     XCTAssertFalse(option.throughNavigationBar,@"设置是否穿透导航栏选项错误");
-    XCTAssertFalse(option.transparentNavigationBar,@"设置导航栏透明选项错误");
+    XCTAssertFalse(option.lightNavigationBar,@"设置导航栏透明选项错误");
     XCTAssertFalse(option.autoDetectTitle,@"设置自动检测标题选项错误");
     XCTAssertFalse(option.showProgressBar,@"设置显示进度条选项错误");
     XCTAssertFalse(option.responseEntityKey,@"设置是否响应实体按键选项错误");
@@ -73,7 +73,7 @@
         XCTAssertFalse(option.lockRotation,@"设置是否禁止旋转选项错误");
         XCTAssertFalse(option.landscape,@"设置是否横屏选项错误");
         XCTAssertFalse(option.throughNavigationBar,@"设置是否穿透导航栏选项错误");
-        XCTAssertFalse(option.transparentNavigationBar,@"设置导航栏透明选项错误");
+        XCTAssertFalse(option.lightNavigationBar,@"设置导航栏透明选项错误");
         XCTAssertFalse(option.autoDetectTitle,@"设置自动检测标题选项错误");
         XCTAssertFalse(option.showProgressBar,@"设置显示进度条选项错误");
         XCTAssertFalse(option.responseEntityKey,@"设置是否响应实体按键选项错误");
@@ -97,7 +97,7 @@
         XCTAssertFalse(option.lockRotation,@"设置是否禁止旋转选项错误");
         XCTAssertFalse(option.landscape,@"设置是否横屏选项错误");
         XCTAssertFalse(option.throughNavigationBar,@"设置是否穿透导航栏选项错误");
-        XCTAssertFalse(option.transparentNavigationBar,@"设置导航栏透明选项错误");
+        XCTAssertFalse(option.lightNavigationBar,@"设置导航栏透明选项错误");
         XCTAssertFalse(option.autoDetectTitle,@"设置自动检测标题选项错误");
         XCTAssertFalse(option.showProgressBar,@"设置显示进度条选项错误");
         XCTAssertFalse(option.responseEntityKey,@"设置是否响应实体按键选项错误");
@@ -120,7 +120,7 @@
         XCTAssertTrue(option.landscape,@"设置是否横屏选项错误");
         XCTAssertFalse(option.hiddenNavigationBar,@"设置是否隐藏导航栏选项错误");
         XCTAssertFalse(option.throughNavigationBar,@"设置是否穿透导航栏选项错误");
-        XCTAssertFalse(option.transparentNavigationBar,@"设置导航栏透明选项错误");
+        XCTAssertFalse(option.lightNavigationBar,@"设置导航栏透明选项错误");
         XCTAssertTrue(option.autoDetectTitle,@"设置自动检测标题选项错误");
         XCTAssertTrue(option.showProgressBar,@"设置显示进度条选项错误");
         XCTAssertFalse(option.responseEntityKey,@"设置是否响应实体按键选项错误");
@@ -145,7 +145,7 @@
         XCTAssertTrue(option.landscape,@"设置是否横屏选项错误");
         XCTAssertFalse(option.hiddenNavigationBar,@"设置是否隐藏导航栏选项错误");
         XCTAssertFalse(option.throughNavigationBar,@"设置是否穿透导航栏选项错误");
-        XCTAssertFalse(option.transparentNavigationBar,@"设置导航栏透明选项错误");
+        XCTAssertFalse(option.lightNavigationBar,@"设置导航栏透明选项错误");
         XCTAssertTrue(option.autoDetectTitle,@"设置自动检测标题选项错误");
         XCTAssertFalse(option.showProgressBar,@"设置显示进度条选项错误");
         XCTAssertTrue(option.responseEntityKey,@"设置是否响应实体按键选项错误");
@@ -189,8 +189,8 @@
     
     YSWebViewAppearance *appearance = [YSWebViewAppearance appearance];
     
-    XCTAssertNotNil(appearance.navigationBarBackButtonImage,@"导航栏黑色返回按钮没有正确加载");
-    XCTAssertNotNil(appearance.oppositeNavigationBarBackButtonImage,@"导航栏白色返回按钮没有正确加载");
+    XCTAssertNotNil(appearance.navigationBarDarkBackButtonImage,@"导航栏黑色返回按钮没有正确加载");
+    XCTAssertNotNil(appearance.navigationBarLightBackButtonImage,@"导航栏白色返回按钮没有正确加载");
     
     XCTAssertNotNil(appearance.toolBarCloseButtonImage,@"工具条返回按钮没有正确加载");
     XCTAssertNotNil(appearance.toolBarForwardButtonImage,@"工具条前进按钮没有正确加载");

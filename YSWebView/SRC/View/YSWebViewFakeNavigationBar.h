@@ -13,7 +13,7 @@ typedef NS_ENUM(NSUInteger,YSWebViewFakeNavigationBarStyle) {
     // 黑色返回按钮和标题
     YSWebViewFakeNavigationBarStyleDark,
     // 白色返回按钮和标题
-    YSWebViewFakeNavigationBarStyleWhite,
+    YSWebViewFakeNavigationBarStyleLight,
 };
 
 

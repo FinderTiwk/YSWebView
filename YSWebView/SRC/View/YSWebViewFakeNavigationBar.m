@@ -28,19 +28,18 @@
     UILayoutGuide *navigationBarLayoutGuide = [[UILayoutGuide alloc] init];
     [self addLayoutGuide:navigationBarLayoutGuide];
 
-    
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     
-    _titleLabel.font = appearance.navigationBarTitleFont;
-    _titleLabel.textColor = appearance.navigationBarTitleColor;
+    _titleLabel.font = appearance.navigationBarDarkTitleFont;
+    _titleLabel.textColor = appearance.navigationBarDarkTitleColor;
     [self addSubview:_titleLabel];
 
     _backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     _backButton.translatesAutoresizingMaskIntoConstraints = NO;
     
-    [_backButton setImage:appearance.navigationBarBackButtonImage forState:UIControlStateNormal];
+    [_backButton setImage:appearance.navigationBarDarkBackButtonImage forState:UIControlStateNormal];
     [self addSubview:_backButton];
     
     NSLayoutYAxisAnchor *navigationBarTopAnchor;
@@ -74,16 +73,15 @@
 - (void)setStyle:(YSWebViewFakeNavigationBarStyle)style{
     YSWebViewAppearance *appearance = [YSWebViewAppearance appearance];
     if (style == YSWebViewFakeNavigationBarStyleDark) {
+        _titleLabel.font = appearance.navigationBarDarkTitleFont;
+        _titleLabel.textColor = appearance.navigationBarDarkTitleColor;
+        [_backButton setImage:appearance.navigationBarDarkBackButtonImage forState:UIControlStateNormal];
         
-        _titleLabel.font = appearance.navigationBarTitleFont;
-        _titleLabel.textColor = appearance.navigationBarTitleColor;
-        [_backButton setImage:appearance.navigationBarBackButtonImage forState:UIControlStateNormal];
     }
     else{
-        _titleLabel.font = appearance.oppositeNavigationBarTitleFont;
-        _titleLabel.textColor = appearance.oppositeNavigationBarTitleColor;
-        [_backButton setImage:appearance.oppositeNavigationBarBackButtonImage forState:UIControlStateNormal];
-
+        _titleLabel.font = appearance.navigationBarLightTitleFont;
+        _titleLabel.textColor = appearance.navigationBarLightTitleColor;
+        [_backButton setImage:appearance.navigationBarLightBackButtonImage forState:UIControlStateNormal];
     }
 }
 

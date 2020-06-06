@@ -36,6 +36,8 @@
 		006C9D3024628C18004B1C53 /* YSWebView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 006C9CB92462800E004B1C53 /* YSWebView.framework */; };
 		006C9D392462B516004B1C53 /* index.html in Resources */ = {isa = PBXBuildFile; fileRef = 006C9D372462B516004B1C53 /* index.html */; };
 		006C9D3A2462B516004B1C53 /* nextPage.html in Resources */ = {isa = PBXBuildFile; fileRef = 006C9D382462B516004B1C53 /* nextPage.html */; };
+		0090300C248A9D6C001D0B34 /* YSWebViewNavigationBarRestorer.h in Headers */ = {isa = PBXBuildFile; fileRef = 0090300A248A9D6C001D0B34 /* YSWebViewNavigationBarRestorer.h */; };
+		0090300D248A9D6C001D0B34 /* YSWebViewNavigationBarRestorer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0090300B248A9D6C001D0B34 /* YSWebViewNavigationBarRestorer.m */; };
 		009FB7F4246544F4001C2FFE /* YSWebView.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 009FB7F3246544F4001C2FFE /* YSWebView.bundle */; };
 /* End PBXBuildFile section */
 
@@ -105,6 +107,8 @@
 		006C9D2F24628C18004B1C53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		006C9D372462B516004B1C53 /* index.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = index.html; sourceTree = "<group>"; };
 		006C9D382462B516004B1C53 /* nextPage.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = nextPage.html; sourceTree = "<group>"; };
+		0090300A248A9D6C001D0B34 /* YSWebViewNavigationBarRestorer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YSWebViewNavigationBarRestorer.h; sourceTree = "<group>"; };
+		0090300B248A9D6C001D0B34 /* YSWebViewNavigationBarRestorer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YSWebViewNavigationBarRestorer.m; sourceTree = "<group>"; };
 		009FB7F3246544F4001C2FFE /* YSWebView.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = YSWebView.bundle; sourceTree = "<group>"; };
 		009FB7F524654652001C2FFE /* YSWebView.podspec */ = {isa = PBXFileReference; lastKnownFileType = text; path = YSWebView.podspec; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -232,6 +236,8 @@
 		009FB7FA2467E8DD001C2FFE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0090300A248A9D6C001D0B34 /* YSWebViewNavigationBarRestorer.h */,
+				0090300B248A9D6C001D0B34 /* YSWebViewNavigationBarRestorer.m */,
 				006C9CC524628039004B1C53 /* YSWebViewFakeNavigationBar.h */,
 				006C9CD524628039004B1C53 /* YSWebViewFakeNavigationBar.m */,
 				006C9CC724628039004B1C53 /* YSWebViewPlaceHolder.h */,
@@ -253,6 +259,7 @@
 				005CE8A5246E3D6E00172B40 /* YSWebViewAppearance.h in Headers */,
 				006C9CEA24628039004B1C53 /* YSWebViewController.h in Headers */,
 				006C9CDE24628039004B1C53 /* YSWebViewPlaceHolder.h in Headers */,
+				0090300C248A9D6C001D0B34 /* YSWebViewNavigationBarRestorer.h in Headers */,
 				006C9CDD24628039004B1C53 /* YSWebViewKit.h in Headers */,
 				006C9CBE2462800E004B1C53 /* YSWebView.h in Headers */,
 				006C9CF124628039004B1C53 /* YSWebViewToolBar.h in Headers */,
@@ -401,6 +408,7 @@
 				006C9CEE24628039004B1C53 /* YSWebViewBridgeAPIManager.m in Sources */,
 				005CE8A6246E3D6E00172B40 /* YSWebViewAppearance.m in Sources */,
 				006C9CEB24628039004B1C53 /* YSWebViewFakeNavigationBar.m in Sources */,
+				0090300D248A9D6C001D0B34 /* YSWebViewNavigationBarRestorer.m in Sources */,
 				006C9CF024628039004B1C53 /* YSWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

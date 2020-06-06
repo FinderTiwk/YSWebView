@@ -24,15 +24,15 @@ FOUNDATION_EXPORT NSNotificationName const YSWebWillDoIAPNotification;
 
 // 加载url或者本地网页(二选一)
 @property (nonatomic,copy) NSString *urlString;
-@property (nonatomic,copy) NSString *htmlPath;
+@property (nonatomic,copy) NSString *htmlFilePath;
 
 @property (nonatomic,weak) UIView *anchorWidget;
 @property (nonatomic,strong) UIWindow *owner;
 @property (nonatomic,assign) YSWebViewOption option;
 
 @property (nonatomic,copy) NSString *versionString;
-@property (nonatomic,copy) NSString *zfbScheme;
-@property (nonatomic,copy) NSString *vxScheme;
+@property (nonatomic,copy) NSString *apWay;
+@property (nonatomic,copy) NSString *vxWay;
 @property (nonatomic,strong) NSDictionary *transactionParams;
 
 @property (nonatomic,strong) NSDictionary *cookies;

@@ -9,35 +9,30 @@
 #ifndef YSWebViewOption_h
 #define YSWebViewOption_h
 
+ 
 typedef struct{
     // 是否显示工具条
-    unsigned short showToolBar:1;
+    unsigned short showToolBar:1;              /*!<  是否显示此框架自带的工具条 */
     
-    // 窗口内容相关选项
-    unsigned short clearBackground:1;
-    unsigned short lockRotation:1;
-    unsigned short landscape:1;
+    unsigned short clearBackground:1;          /*!<  是否透明背景 */
+    unsigned short lockRotation:1;             /*!<  是否追随手持方向 */
+    unsigned short landscape:1;                /*!<  是否横屏显示, 如果设置了 `lockRotation` 为YES, 此选项无效 */
     
-    // 导航栏相关选项
-    unsigned short hiddenNavigationBar:1;
-    unsigned short throughNavigationBar:1;
-    unsigned short transparentNavigationBar:1;
-    unsigned short autoDetectTitle:1;
+    unsigned short hiddenNavigationBar:1;      /*!<  是否隐藏导航栏, defalut 不隐藏 */
+    unsigned short throughNavigationBar:1;     /*!<   是否穿透导航栏,  default NO */
+    unsigned short lightNavigationBar:1;       /*!<   导航栏返回按钮是否白色 */
+    unsigned short autoDetectTitle:1;          /*!<   是否自动检测Web Title, 如果控制器不设置title 设置了此选项后会自动根据Web的标题显示*/
     
-    // 是否显示进度条
-    unsigned short showProgressBar:1;
-    // 实体按钮(Android使用)
-    unsigned short responseEntityKey:1;
+    unsigned short showProgressBar:1;          /*!<  是否显示进度条 */
+    
+    unsigned short responseEntityKey:1;        /*!<  是否响应实体按键 (Android使用) */
+    unsigned short closeWhenLoadFailure:1;     /*!<  加载失败时,是否自动关闭返回  */
 
-    unsigned short closeWhenLoadFailure:1;
+    unsigned short transitionsStyle:1;         /*!<  加载失败时,是否自动关闭返回  */
+    unsigned short reduceAnimation:1;          /*!<  加载失败时,是否自动关闭返回  */
     
-    // 转场相关
-    unsigned short transitionsStyle:1;
-    unsigned short reduceAnimation:1;
-    
-    // 状态栏相关
-    unsigned short hiddenStatusBar:1;
-    unsigned short lightStatusBar:1;
+    unsigned short hiddenStatusBar:1;          /*!< 是否陒状态栏  */
+    unsigned short lightStatusBar:1;           /*!< 白色/黑色状态栏, default 白色 */
     
 } YSWebViewOption;
 
@@ -93,7 +88,7 @@ static inline YSWebViewOption parseYSWebViewOption(NSString **urlString){
     
     option.hiddenNavigationBar      = subBitInString(optionString,--length);
     option.throughNavigationBar     = subBitInString(optionString,--length);
-    option.transparentNavigationBar = subBitInString(optionString,--length);
+    option.lightNavigationBar       = subBitInString(optionString,--length);
     
     option.autoDetectTitle      = subBitInString(optionString,--length);
     option.showProgressBar      = subBitInString(optionString,--length);
@@ -121,7 +116,7 @@ static inline NSString *descForYSWebViewOption(YSWebViewOption option){
     [desc appendFormat:@"%@", @(option.responseEntityKey)];
     [desc appendFormat:@"%@", @(option.showProgressBar)];
     [desc appendFormat:@"%@", @(option.autoDetectTitle)];
-    [desc appendFormat:@"%@", @(option.transparentNavigationBar)];
+    [desc appendFormat:@"%@", @(option.lightNavigationBar)];
     [desc appendFormat:@"%@", @(option.throughNavigationBar)];
     [desc appendFormat:@"%@", @(option.hiddenNavigationBar)];
     [desc appendFormat:@"%@", @(option.landscape)];

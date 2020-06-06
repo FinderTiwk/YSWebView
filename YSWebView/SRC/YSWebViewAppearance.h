@@ -14,21 +14,23 @@
 
 @property (nonatomic,strong) UIColor *navigationBarBackgroundColor;
 
-@property (nonatomic,strong) UIImage *navigationBarBackButtonImage;
-@property (nonatomic,strong) UIFont *navigationBarTitleFont;
-@property (nonatomic,strong) UIColor *navigationBarTitleColor;
+@property (nonatomic,strong) UIImage *navigationBarLightBackButtonImage;
+@property (nonatomic,strong) UIFont *navigationBarLightTitleFont;
+@property (nonatomic,strong) UIColor *navigationBarLightTitleColor;
 
-@property (nonatomic,strong) UIImage *oppositeNavigationBarBackButtonImage;
-@property (nonatomic,strong) UIFont *oppositeNavigationBarTitleFont;
-@property (nonatomic,strong) UIColor *oppositeNavigationBarTitleColor;
+@property (nonatomic,strong) UIImage *navigationBarDarkBackButtonImage;
+@property (nonatomic,strong) UIFont *navigationBarDarkTitleFont;
+@property (nonatomic,strong) UIColor *navigationBarDarkTitleColor;
 
-
+@property (nonatomic,strong) UIColor *progressBarColor;
 @property (nonatomic,strong) UIColor *toolBarBackgroundColor;
 
 @property (nonatomic,strong) UIImage *toolBarBackButtonImage;
 @property (nonatomic,strong) UIImage *toolBarForwardButtonImage;
 @property (nonatomic,strong) UIImage *toolBarRefreshButtonImage;
 @property (nonatomic,strong) UIImage *toolBarCloseButtonImage;
+
+@property (nonatomic,readonly) UIImage *navigationBarBackgroundClearImage;
 
 @end
 
